@@ -14,3 +14,6 @@ Here are some ideas to get you started:
 - 😄 Pronouns: ...
 - ⚡ Fun fact: ...
 -->
+## 📊 我的全景数据看板
+
+![GitHub Metrics](./github-metrics.svg)
