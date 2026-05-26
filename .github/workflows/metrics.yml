@@ -16,7 +16,7 @@ jobs:
         with:
           # 刚刚配置的 Token
           token: ${{ secrets.METRICS_TOKEN }}
-
+          plugins_errors_fatal: no
           # 基础配置
           user: jax2730
           template: classic
