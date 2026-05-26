@@ -25,7 +25,7 @@ jobs:
 
           # 🔥 模块 1：高科技 3D 等距立体贡献日历（替代原生的扁平绿墙）
           plugin_isocalendar: yes
-          plugin_isocalendar_duration: half-year # 显示半年的立体效果
+          plugin_isocalendar_duration: full-year # 显示半年的立体效果
 
           # 🔥 模块 2：技术栈与编程语言详细分析
           plugin_languages: yes
