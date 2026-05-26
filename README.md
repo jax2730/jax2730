@@ -16,6 +16,14 @@ Here are some ideas to get you started:
 -->
 ## 📊 About me:
 
+
 <p align="center">
-  <img src="https://metrics.lecoq.io/jax2730?template=classic&isocalendar=1&isocalendar.duration=full-year&languages=1&languages.limit=8&achievements=1&achievements.display=detailed" width="100%" alt="Metrics">
+  <img src="https://github-profile-trophy.vercel.app/?username=jax2730&theme=tokyonight&column=7&margin-w=15" width="100%" alt="Trophies" />
+</p>
+
+<p align="center">
+  <img src="https://img.shields.io/badge/C%2B%2B-00599C?style=for-the-badge&logo=c%2B%2B&logoColor=white" />
+  <img src="https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white" />
+  <img src="https://img.shields.io/badge/Git-F05032?style=for-the-badge&logo=git&logoColor=white" />
+  <img src="https://img.shields.io/badge/CMake-064F8C?style=for-the-badge&logo=cmake&logoColor=white" />
 </p>
