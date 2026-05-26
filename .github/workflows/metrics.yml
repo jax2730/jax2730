@@ -12,7 +12,7 @@ jobs:
       contents: write
     steps:
       - name: Generate Custom Metrics
-        uses: lowlighter/metrics@latest
+        uses: lowlighter/metrics@master # 💡 修改为 @master 修复下载死锁
         with:
           # 刚刚配置的 Token
           token: ${{ secrets.METRICS_TOKEN }}
@@ -25,7 +25,7 @@ jobs:
 
           # 🔥 模块 1：高科技 3D 等距立体贡献日历（替代原生的扁平绿墙）
           plugin_isocalendar: yes
-          plugin_isocalendar_duration: full-year # 显示半年的立体效果
+          plugin_isocalendar_duration: full-year # 显示一整年的立体效果
 
           # 🔥 模块 2：技术栈与编程语言详细分析
           plugin_languages: yes
@@ -43,8 +43,7 @@ jobs:
           plugin_stars: yes
           plugin_stars_limit: 4
 
-
-
+          # 🔥 模块 4：编码作息习惯分析（替代经常报错的旧版成就插件）
           plugin_habits: yes
           plugin_habits_from: 200
           plugin_habits_days: 14
