@@ -16,4 +16,6 @@ Here are some ideas to get you started:
 -->
 ## 📊 About me:
 
-<img src="./github-metrics.svg" width="100%" alt="GitHub Metrics">
+<p align="center">
+  <img src="https://metrics.lecoq.io/jax2730?template=classic&isocalendar=1&isocalendar.duration=full-year&languages=1&languages.limit=8&achievements=1&achievements.display=detailed" width="100%" alt="Metrics">
+</p>
