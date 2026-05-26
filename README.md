@@ -16,4 +16,4 @@ Here are some ideas to get you started:
 -->
 ## 📊 About me:
 
-![GitHub Metrics](./github-metrics.svg)
+<img src="./github-metrics.svg" width="100%" alt="GitHub Metrics">
