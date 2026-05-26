@@ -18,7 +18,6 @@ Here are some ideas to get you started:
 
 
 <p align="center">
-  <img src="https://github-profile-trophy.vercel.app/?username=jax2730&theme=tokyonight&column=7&margin-w=15" width="100%" alt="Trophies" />
+  <img src="https://metrics.lecoq.io/jax2730?template=classic&isocalendar=1&isocalendar.duration=full-year&languages=1&languages.limit=8&achievements=1&achievements.display=detailed" width="100%" alt="Metrics">
 </p>
-
 
