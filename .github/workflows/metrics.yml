@@ -8,17 +8,15 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: write
-    # 💡 核心破局点：直接在虚拟机里塞一个官方编译好的 Docker 容器，不走 GitHub 的下载通道
     container:
       image: ghcr.io/lowlighter/metrics:master
       options: --user root
     steps:
-      - name: Generate Custom Metrics via Docker
+      - name: Generate Custom Metrics via Docker Container
+        # 💡 核心修正点：显式调用容器内部的 node 脚本入口，彻底解决 not found 问题
         run: |
-          # 强行通过容器内部的命令行工具直接渲染，完美避开所有 Action 依赖包下载
-          metrics
+          node /metrics/source/app/action/index.mjs
         env:
-          # 传入你的 Token 和基础配置
           TOKEN: ${{ secrets.METRICS_TOKEN }}
           USER: jax2730
           TEMPLATE: classic
