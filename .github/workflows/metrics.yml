@@ -13,11 +13,16 @@ jobs:
       options: --user root
     steps:
       - name: Generate Custom Metrics via Docker Container
-        # 💡 核心修正点：显式调用容器内部的 node 脚本入口，彻底解决 not found 问题
+        # 💡 双重保险：不仅走环境变量，还在执行命令时显式作为参数或强行通过 node 读取
         run: |
           node /metrics/source/app/action/index.mjs
         env:
+          # 💡 注意：部分旧版 Docker 镜像只识别全大写的 GITHUB_TOKEN 或 INPUT_TOKEN
+          GITHUB_TOKEN: ${{ secrets.METRICS_TOKEN }}
           TOKEN: ${{ secrets.METRICS_TOKEN }}
+          INPUT_TOKEN: ${{ secrets.METRICS_TOKEN }}
+          
+          # 基础配置
           USER: jax2730
           TEMPLATE: classic
           BASE: header, activity, community, repositories, metadata
