@@ -13,23 +13,23 @@ jobs:
       options: --user root
     steps:
       - name: Generate Custom Metrics via Docker Container
-        # 💡 双重保险：不仅走环境变量，还在执行命令时显式作为参数或强行通过 node 读取
         run: |
           node /metrics/source/app/action/index.mjs
         env:
-          # 💡 注意：部分旧版 Docker 镜像只识别全大写的 GITHUB_TOKEN 或 INPUT_TOKEN
+          # 三重 Token 保险继续保留
           GITHUB_TOKEN: ${{ secrets.METRICS_TOKEN }}
           TOKEN: ${{ secrets.METRICS_TOKEN }}
           INPUT_TOKEN: ${{ secrets.METRICS_TOKEN }}
           
-          # 基础配置
+          # 基础渲染配置优化
           USER: jax2730
           TEMPLATE: classic
-          BASE: header, activity, community, repositories, metadata
+          # 💡 极其重要：仅保留最核心的 header 和 metadata，剔除可能引发内部数据模型渲染冲突的组件
+          BASE: header, metadata
           CONFIG_TIMEZONE: Asia/Shanghai
           PLUGINS_ERRORS_FATAL: "no"
 
-          # 🟢 1. 3D 立体贡献日历
+          # 🟢 1. 3D 立体贡献日历（渲染非常稳定）
           PLUGIN_ISOCALENDAR: "yes"
           PLUGIN_ISOCALENDAR_DURATION: full-year
 
@@ -53,6 +53,6 @@ jobs:
           PLUGIN_HABITS_FACTS: "yes"
           PLUGIN_HABITS_CHARTS: "yes"
 
-          # 界面微调
-          CONFIG_TWEMOJI: "yes"
+          # 💡 核心安全点：关闭第三方 Twemoji 字体包渲染，防止 Puppeteer 在容器内因找不到字体而 Dying
+          CONFIG_TWEMOJI: "no"
           CONFIG_PADDING: 0, 5 + 11%
