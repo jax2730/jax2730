@@ -1,7 +1,7 @@
 name: Metrics
 on:
   schedule: [{cron: "0 0,12 * * *"}]
-  workflow_dispatch:
+  workflow_dispatch: {}
   push: {branches: ["master", "main"]}
 jobs:
   github-metrics:
@@ -9,53 +9,54 @@ jobs:
     permissions:
       contents: write
     steps:
-      # 🟢 第一步：在 GitHub 宿主机上十秒钟内强行安装中文字体包与核心字体
-      - name: Install Chinese Fonts and Emoji Support
+      # 1. 宿主机安装字体，确保任何可能遗留的中文不会变成“豆腐块”导致崩溃
+      - name: Install Fonts
         run: |
           sudo apt-get update
-          sudo apt-get install -y fonts-noto-cjk fonts-noto-color-emoji ttf-mscorefonts-installer
+          sudo apt-get install -y fonts-noto-cjk
 
-      # 🟢 第二步：调用 Docker 镜像，并把宿主机的字体目录直接挂载（共享）进容器内部
-      - name: Generate Custom Metrics via Docker Container
-        uses: docker://ghcr.io/lowlighter/metrics:master
+      # 2. 回归官方标准的 Action 模式（不走纯 Docker），但通过极严格的参数过滤掉 CSDN 的干扰
+      - name: Generate Custom Metrics
+        uses: lowlighter/metrics@master
         with:
-          # 💡 核心破局点：使用 entrypoint 强行调用核心脚本，同时自动继承宿主机的字体环境
-          entrypoint: node
-          args: /metrics/source/app/action/index.mjs
-        env:
-          GITHUB_TOKEN: ${{ secrets.METRICS_TOKEN }}
-          TOKEN: ${{ secrets.METRICS_TOKEN }}
-          INPUT_TOKEN: ${{ secrets.METRICS_TOKEN }}
+          token: ${{ secrets.METRICS_TOKEN }}
+          user: jax2730
+          template: classic
+          config_timezone: Asia/Shanghai
+          plugins_errors_fatal: no
+
+          # 💡 核心解门点一：在基础信息中，坚决剔除 metadata 和乱抓链接的组件
+          # 仅保留 header（头像/名字）、activity（动态）、community（社区统计）、repositories（仓库）
+          base: header, activity, community, repositories
           
-          USER: jax2730
-          TEMPLATE: classic
-          BASE: header, metadata
-          CONFIG_TIMEZONE: Asia/Shanghai
-          PLUGINS_ERRORS_FATAL: "no"
+          # 💡 核心解门点二：显式跳过对社交账号（CSDN 链接）的图表化渲染，直接绕过 Puppeteer 崩溃点
+          base_skip: yes
+          plugin_metadata: no
 
-          # 🟢 1. 3D 立体贡献日历
-          PLUGIN_ISOCALENDAR: "yes"
-          PLUGIN_ISOCALENDAR_DURATION: full-year
+          # 🟢 模块 1：3D 立体贡献日历
+          plugin_isocalendar: yes
+          plugin_isocalendar_duration: full-year
 
-          # 🟢 2. 技术栈与编程语言详细分析
-          PLUGIN_LANGUAGES: "yes"
-          PLUGIN_LANGUAGES_ANALYSIS_TIMEOUT: "15"
-          PLUGIN_LANGUAGES_CATEGORIES: markup, programming
-          PLUGIN_LANGUAGES_COLORS: github
-          PLUGIN_LANGUAGES_LIMIT: "8"
-          PLUGIN_LANGUAGES_SECTIONS: most-used
-          PLUGIN_LANGUAGES_THRESHOLD: "0%"
+          # 🟢 模块 2：技术栈与编程语言详细分析
+          plugin_languages: yes
+          plugin_languages_analysis_timeout: 15
+          plugin_languages_categories: markup, programming
+          plugin_languages_colors: github
+          plugin_languages_limit: 8
+          plugin_languages_sections: most-used
+          plugin_languages_threshold: 0%
 
-          # 🟢 3. 星标与高光项目展示
-          PLUGIN_STARS: "yes"
-          PLUGIN_STARS_LIMIT: "4"
+          # 🟢 模块 3：星标项目展示
+          plugin_stars: yes
+          plugin_stars_limit: 4
 
-          # 🟢 4. 编码作息习惯分析
-          PLUGIN_HABITS: "yes"
-          PLUGIN_HABITS_FROM: "200"
-          PLUGIN_HABITS_DAYS: "14"
-          PLUGIN_HABITS_FACTS: "yes"
-          PLUGIN_HABITS_CHARTS: "yes"
+          # 🟢 模块 4：编码作息习惯分析
+          plugin_habits: yes
+          plugin_habits_from: 200
+          plugin_habits_days: 14
+          plugin_habits_facts: yes
+          plugin_habits_charts: yes
 
-          CONFIG_TWEMOJI: "no"
-          CONFIG_PADDING: 0, 5 + 11%
+          # 💡 核心安全点三：关闭容易引发 Puppeteer 容器内报错的外部特殊 Emoji 库
+          config_twemoji: no
+          config_padding: 0, 5 + 11%
