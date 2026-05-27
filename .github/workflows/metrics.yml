@@ -51,11 +51,10 @@ jobs:
           plugin_stars_limit: 4
 
           # 🟢 模块 4：编码作息习惯分析
-          plugin_habits: yes
-          plugin_habits_from: 200
-          plugin_habits_days: 14
-          plugin_habits_facts: yes
-          plugin_habits_charts: yes
+          plugin_habits: no
+          plugin_lines: yes
+          plugin_lines_history: yes     # 展示历史对比折线
+          plugin_lines_repositories_limit: 4
 
           # 💡 核心安全点三：关闭容易引发 Puppeteer 容器内报错的外部特殊 Emoji 库
           config_twemoji: no
